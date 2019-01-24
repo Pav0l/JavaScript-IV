@@ -56,6 +56,9 @@ class Instructor extends Person {
     grade(student, subject) {
         return `${student} receives a perfect score on ${subject}.`;
     }
+    gradingAssignments(studentObj, result) {
+        return result === true ? studentObj.grade += Math.random()*10 : studentObj.grade -= Math.random()*5;        
+    }
 }
 // test examples:
 const fred = new Instructor({
@@ -96,6 +99,7 @@ class Student extends Person {
         this.previousBackground = previousBackground;
         this.className = className;
         this.favSubjects = favSubjects;
+        this.grade = 20;
     }
 
     listsSubjects() {
@@ -106,6 +110,9 @@ class Student extends Person {
     }
     sprintChallenge(subject) {
         return `${this.name} has begun sprint challenge on ${subject}`;
+    }
+    graduate() {
+        return this.grade > 70 ? `HOOORAY! ${this.name} succesfully graduated Lambda School!` : `No worries ${this.name}, time to study some more!`
     }
 }
 // test examples:
@@ -191,3 +198,13 @@ const girl = new ProjectManager({
 // console.log(dude.favInstructor);
 // console.log(girl.standUp('#webeu1'));
 // console.log(dude.debugsCode(pavol, 'callbacks'));
+
+
+const gradeStudentTillGraduation = (student, pm) => {
+    while (student.grade < 70) {
+        let passFail = true;
+        Math.random() > 0.3 ? passFail = true : passFail = false;
+        pm.gradingAssignments(student, passFail);        
+        console.log(student.grade, student.graduate());
+    }
+}
